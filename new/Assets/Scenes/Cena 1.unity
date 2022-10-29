@@ -206,10 +206,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb86525a0c404a44194a56a1505f9c8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anime: {fileID: 1939352639}
-  animeDorsal: {fileID: 0}
-  jumpForce: 0
-  speed: 0
+  animePernas: {fileID: 1939352639}
+  animeDorsal: {fileID: 857472692}
+  body: {fileID: 478992012}
+  dorsal: {fileID: 857472690}
+  pernas: {fileID: 1939352637}
+  jumpForce: 200
+  speed: 1
   score: 0
   points: {fileID: 0}
 --- !u!1 &857472689
@@ -325,7 +328,7 @@ GameObject:
   - component: {fileID: 1029097722}
   m_Layer: 0
   m_Name: Piso
-  m_TagString: Untagged
+  m_TagString: Grounded
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

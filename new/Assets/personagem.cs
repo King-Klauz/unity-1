@@ -1,38 +1,84 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class personagem : MonoBehaviour
 {
     [SerializeField]
-    private Animator anime, animeDorsal;
+    private Animator animePernas, animeDorsal;
+    [SerializeField]
     private Rigidbody2D body;
+    [SerializeField]
+    Transform dorsal, pernas;
     public float jumpForce;
     public float speed;
-	public int score;
-	public Text points;
+    public int score;
+    public Text points;
 
     // Start is called before the first frame update
 
     void Start()
     {
-        body = GetComponent<Rigidbody2D>();
-		score = 0;
+        score = 0;
     }
 
     // Update is called once per frame
-    void FixedUpdate() {
-        if (Input.GetAxis("Horizontal") != 0.0f)
-            {
-                transform.localScale = new Vector3(Input.GetAxis("Horizontal")>0?1:-1, 1f, 1f);
-                body.velocity = new Vector2 (Input.GetAxis("Horizontal")*speed*Time.fixedDeltaTime, 0);
-                
-                //transform.Translate(speed*Input.GetAxis("Horizontal"), 0.0f, 0.0f);
-            }
+    void Update()
+    {
+        body.velocity = new Vector2(Input.GetAxis("Horizontal") * speed, body.velocity.y);
+
+        if (Input.GetAxis("Horizontal") < 0)
+        {
+            animeDorsal.SetInteger("Speed", 1);
+            animePernas.SetInteger("Speed", 1);
+            dorsal.localScale = new Vector3(-1, 1, 1);
+            pernas.localScale = new Vector3(-1, 1, 1);
+        }
+        else if (Input.GetAxis("Horizontal") > 0)
+        {
+            animeDorsal.SetInteger("Speed", 1);
+            animePernas.SetInteger("Speed", 1);
+            dorsal.localScale = new Vector3(1, 1, 1);
+            pernas.localScale = new Vector3(1, 1, 1);
+        }
+        else
+        {
+            animeDorsal.SetInteger("Speed", 0);
+            animePernas.SetInteger("Speed", 0);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space) && animePernas.GetBool("Grounded"))
+        {
+            animeDorsal.SetBool("Jump", true);
+            animePernas.SetBool("Jump", true);
+            animeDorsal.SetBool("Grounded", false);
+            animePernas.SetBool("Grounded", false);
+            body.AddForce(new Vector2(body.velocity.x, jumpForce));
+        }
     }
 
-    void Update()
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Grounded"))
+        {
+            animeDorsal.SetBool("Jump", false);
+            animePernas.SetBool("Jump", false);
+            animeDorsal.SetBool("Grounded", true);
+            animePernas.SetBool("Grounded", true);
+        }
+        if (collision.gameObject.CompareTag("Coin"))
+        {
+            Destroy(collision.gameObject);
+            score++;
+            points.text = "pontos:" + score;
+            print(score);
+        }
+    }
+}
+	
+    /*void Update()
     {
         //Se estiver vivo
         if (anime.GetInteger("Life") > 0)
@@ -62,12 +108,11 @@ public class personagem : MonoBehaviour
             anime.SetBool("Grounded", true);
             anime.SetBool("Jump", false);
         }
-		/*if(collision.gameObject.CompareTag("Coin")){
+		*//*if(collision.gameObject.CompareTag("Coin")){
 			Destroy(collision.gameObject);
 			score++;
 			points.text = "pontos:" + score;
 			print (score);
-		}*/
-	}
+		}*//*
+	}*/
 
-}
