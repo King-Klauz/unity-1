@@ -212,7 +212,7 @@ MonoBehaviour:
   dorsal: {fileID: 857472690}
   pernas: {fileID: 1939352637}
   jumpForce: 200
-  speed: 1
+  speed: 3
   score: 0
   points: {fileID: 0}
 --- !u!1 &857472689
