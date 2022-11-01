@@ -36,8 +36,14 @@ public class personagem : MonoBehaviour
             animePernas.SetInteger("Speed", 1);
             dorsal.localScale = new Vector3(-1, 1, 1);
             pernas.localScale = new Vector3(-1, 1, 1);
-            if(!legFixedLeft)
+            if (!legFixedLeft)
+            {
+                if (animeDorsal.GetBool("Jump"))
+                {
+                    FixAirPosition();
+                }
                 FixLegPosition();
+            }
         }
         else if (Input.GetAxis("Horizontal") > 0)
         {
@@ -45,8 +51,14 @@ public class personagem : MonoBehaviour
             animePernas.SetInteger("Speed", 1);
             dorsal.localScale = new Vector3(1, 1, 1);
             pernas.localScale = new Vector3(1, 1, 1);
-            if(!legFixedRight)
+            if (!legFixedRight)
+            {
+                if (animeDorsal.GetBool("Jump"))
+                {
+                    FixAirPosition();
+                }
                 FixLegPosition();
+            }
         }
         else
         {
@@ -54,13 +66,26 @@ public class personagem : MonoBehaviour
             animePernas.SetInteger("Speed", 0);
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && animePernas.GetBool("Grounded"))
+        if (Input.GetKeyDown(KeyCode.Space) && animePernas.GetBool("Grounded") && firstFix)
         {
+            FixJumpPosition();
             animeDorsal.SetBool("Jump", true);
             animePernas.SetBool("Jump", true);
             animeDorsal.SetBool("Grounded", false);
             animePernas.SetBool("Grounded", false);
             body.AddForce(new Vector2(body.velocity.x, jumpForce));
+        }
+
+        atirar();
+    }
+
+    private void atirar()
+    {
+        if (Input.GetKeyDown("j"))
+        {
+            animeDorsal.SetBool("Atirar", true);
+            print("space key was pressed");
+            //animeDorsal.SetBool("Atirar", false);
         }
     }
 
@@ -71,20 +96,58 @@ public class personagem : MonoBehaviour
             legFixedRight = true;
             legFixedLeft = false;
             pernas.position = new Vector3(pernas.position.x - 0.08f, pernas.position.y, pernas.position.z);
-        }else if (!legFixedLeft || firstFix)
+        }
+        else if (!legFixedLeft || firstFix)
         {
             firstFix = true;
             legFixedLeft = true;
             legFixedRight = false;
             pernas.position = new Vector3(pernas.position.x + 0.08f, pernas.position.y, pernas.position.z);
         }
-        
+    }
+
+    private void FixJumpPosition()
+    {
+        if (!legFixedRight)
+        {
+            dorsal.position = new Vector3(dorsal.position.x + 0.07f, dorsal.position.y + 0.07f, dorsal.position.z);
+        }
+        else if (!legFixedLeft)
+        {
+            dorsal.position = new Vector3(dorsal.position.x - 0.07f, dorsal.position.y + 0.07f, dorsal.position.z);
+        }
+    }
+
+    private void FixAirPosition()
+    {
+        if (!legFixedRight)
+        {
+            dorsal.position = new Vector3(dorsal.position.x - 0.11f, dorsal.position.y, dorsal.position.z);
+        }
+        else if (!legFixedLeft)
+        {
+            dorsal.position = new Vector3(dorsal.position.x + 0.11f, dorsal.position.y, dorsal.position.z);
+        }
+    }
+
+    private void FixGroundPosition()
+    {
+        if (!legFixedRight)
+        {
+            dorsal.position = new Vector3(pernas.position.x - 0.037f, pernas.position.y + 0.154f, dorsal.position.z);
+        }
+        else if (!legFixedLeft)
+        {
+            dorsal.position = new Vector3(pernas.position.x + 0.037f, pernas.position.y + 0.154f, dorsal.position.z);
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Grounded"))
         {
+            if (animeDorsal.GetBool("Jump"))
+                FixGroundPosition();
             animeDorsal.SetBool("Jump", false);
             animePernas.SetBool("Jump", false);
             animeDorsal.SetBool("Grounded", true);
