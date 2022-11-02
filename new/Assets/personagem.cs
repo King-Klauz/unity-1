@@ -12,7 +12,7 @@ public class personagem : MonoBehaviour
     [SerializeField]
     private Rigidbody2D body;
     [SerializeField]
-    Transform dorsal, pernas;
+    Transform dorsal, pernas, bullet;
     public float jumpForce;
     public float speed;
     public int score;
@@ -33,9 +33,29 @@ public class personagem : MonoBehaviour
     {
         if (delay >= 0)
         {
-            Debug.Log("Frame: " + delay);
+            Debug.Log("delay tiros: " + delay);
             delay--;
         }
+
+        if (Input.GetAxis("Vertical") > 0)
+        {
+            animeDorsal.SetInteger("Up", 1);
+        }
+        else
+        {
+            animeDorsal.SetInteger("Up", -1);
+        }
+
+ 
+        if (Input.GetAxis("Vertical") < 0)
+        {
+            animeDorsal.SetInteger("Down", 1);
+        }
+        else
+        {
+            animeDorsal.SetInteger("Down", -1);
+        }
+
 
         atirar();
 
@@ -48,6 +68,7 @@ public class personagem : MonoBehaviour
             animePernas.SetInteger("Speed", 1);
             dorsal.localScale = new Vector3(-1, 1, 1);
             pernas.localScale = new Vector3(-1, 1, 1);
+            
             if (!legFixedLeft)
             {
                 if (animeDorsal.GetBool("Jump"))
