@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using UnityEngine;
@@ -17,6 +18,8 @@ public class personagem : MonoBehaviour
     public int score;
     public Text points;
     private bool legFixedRight, legFixedLeft, firstFix;
+    //public float degreesPerSecond = 2.0f;
+    public float delay = 0.2f;
 
     // Start is called before the first frame update
 
@@ -28,6 +31,16 @@ public class personagem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        while (delay >= 0)
+        {
+            delay = delay - Time.deltaTime;
+
+            print(delay);
+        }
+        atirar();
+        //print(Time.deltaTime*delay);
+
+
         body.velocity = new Vector2(Input.GetAxis("Horizontal") * speed, body.velocity.y);
 
         if (Input.GetAxis("Horizontal") < 0)
@@ -76,16 +89,21 @@ public class personagem : MonoBehaviour
             body.AddForce(new Vector2(body.velocity.x, jumpForce));
         }
 
-        atirar();
+        
     }
 
     private void atirar()
     {
-        if (Input.GetKeyDown("j"))
+        if (Input.GetKeyDown("j") && delay<=0)
         {
             animeDorsal.SetBool("Atirar", true);
             print("space key was pressed");
             //animeDorsal.SetBool("Atirar", false);
+        }
+        else if(delay<=0)
+        {
+            delay = 0.05f;
+            animeDorsal.SetBool("Atirar", false);
         }
     }
 
@@ -95,14 +113,14 @@ public class personagem : MonoBehaviour
         {
             legFixedRight = true;
             legFixedLeft = false;
-            pernas.position = new Vector3(pernas.position.x - 0.08f, pernas.position.y, pernas.position.z);
+            pernas.position = new Vector3(pernas.position.x - 0.8f, pernas.position.y, pernas.position.z);
         }
         else if (!legFixedLeft || firstFix)
         {
             firstFix = true;
             legFixedLeft = true;
             legFixedRight = false;
-            pernas.position = new Vector3(pernas.position.x + 0.08f, pernas.position.y, pernas.position.z);
+            pernas.position = new Vector3(pernas.position.x + 0.8f, pernas.position.y, pernas.position.z);
         }
     }
 
@@ -110,11 +128,11 @@ public class personagem : MonoBehaviour
     {
         if (!legFixedRight)
         {
-            dorsal.position = new Vector3(dorsal.position.x + 0.07f, dorsal.position.y + 0.07f, dorsal.position.z);
+            dorsal.position = new Vector3(dorsal.position.x + 0.07f*8, dorsal.position.y + 0.07f * 8, dorsal.position.z);
         }
         else if (!legFixedLeft)
         {
-            dorsal.position = new Vector3(dorsal.position.x - 0.07f, dorsal.position.y + 0.07f, dorsal.position.z);
+            dorsal.position = new Vector3(dorsal.position.x - 0.07f*8, dorsal.position.y + 0.07f * 8, dorsal.position.z);
         }
     }
 
@@ -122,11 +140,11 @@ public class personagem : MonoBehaviour
     {
         if (!legFixedRight)
         {
-            dorsal.position = new Vector3(dorsal.position.x - 0.11f, dorsal.position.y, dorsal.position.z);
+            dorsal.position = new Vector3(dorsal.position.x - 0.11f*8, dorsal.position.y, dorsal.position.z);
         }
         else if (!legFixedLeft)
         {
-            dorsal.position = new Vector3(dorsal.position.x + 0.11f, dorsal.position.y, dorsal.position.z);
+            dorsal.position = new Vector3(dorsal.position.x + 0.11f*8, dorsal.position.y, dorsal.position.z);
         }
     }
 
@@ -134,11 +152,11 @@ public class personagem : MonoBehaviour
     {
         if (!legFixedRight)
         {
-            dorsal.position = new Vector3(pernas.position.x - 0.037f, pernas.position.y + 0.154f, dorsal.position.z);
+            dorsal.position = new Vector3(pernas.position.x - 0.037f*8, pernas.position.y + 0.154f*8, dorsal.position.z);
         }
         else if (!legFixedLeft)
         {
-            dorsal.position = new Vector3(pernas.position.x + 0.037f, pernas.position.y + 0.154f, dorsal.position.z);
+            dorsal.position = new Vector3(pernas.position.x + 0.037f*8, pernas.position.y + 0.154f*8, dorsal.position.z);
         }
     }
 
