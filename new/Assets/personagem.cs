@@ -37,12 +37,6 @@ public class personagem : MonoBehaviour
             delay--;
         }
 
-        /*while (delay >= 0)
-        {
-            delay = delay - Time.deltaTime;
-
-            print(delay);
-        }*/
         atirar();
 
 
