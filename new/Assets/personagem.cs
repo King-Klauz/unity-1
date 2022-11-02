@@ -19,7 +19,7 @@ public class personagem : MonoBehaviour
     public Text points;
     private bool legFixedRight, legFixedLeft, firstFix;
     //public float degreesPerSecond = 2.0f;
-    public float delay = 0.2f;
+    public int delay = 0;
 
     // Start is called before the first frame update
 
@@ -31,14 +31,19 @@ public class personagem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        while (delay >= 0)
+        if (delay >= 0)
+        {
+            Debug.Log("Frame: " + delay);
+            delay--;
+        }
+
+        /*while (delay >= 0)
         {
             delay = delay - Time.deltaTime;
 
             print(delay);
-        }
+        }*/
         atirar();
-        //print(Time.deltaTime*delay);
 
 
         body.velocity = new Vector2(Input.GetAxis("Horizontal") * speed, body.velocity.y);
@@ -98,14 +103,15 @@ public class personagem : MonoBehaviour
         {
             animeDorsal.SetBool("Atirar", true);
             print("space key was pressed");
-            //animeDorsal.SetBool("Atirar", false);
+            delay = 20;
         }
-        else if(delay<=0)
+        else if (delay <= 0)
         {
-            delay = 0.05f;
             animeDorsal.SetBool("Atirar", false);
         }
+         
     }
+
 
     private void FixLegPosition()
     {
@@ -128,11 +134,11 @@ public class personagem : MonoBehaviour
     {
         if (!legFixedRight)
         {
-            dorsal.position = new Vector3(dorsal.position.x + 0.07f*8, dorsal.position.y + 0.07f * 8, dorsal.position.z);
+            dorsal.position = new Vector3(dorsal.position.x + 0.07f*8, dorsal.position.y + 0.06f * 8, dorsal.position.z);
         }
         else if (!legFixedLeft)
         {
-            dorsal.position = new Vector3(dorsal.position.x - 0.07f*8, dorsal.position.y + 0.07f * 8, dorsal.position.z);
+            dorsal.position = new Vector3(dorsal.position.x - 0.07f*8, dorsal.position.y + 0.06f * 8, dorsal.position.z);
         }
     }
 
