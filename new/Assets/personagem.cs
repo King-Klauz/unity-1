@@ -12,19 +12,21 @@ public class personagem : MonoBehaviour
     [SerializeField]
     private Rigidbody2D body;
     [SerializeField]
-    Transform dorsal, pernas, bullet;
+    Transform dorsal, pernas, shootingPoint;
     public float jumpForce;
     public float speed;
     public int score;
     public Text points;
-    private bool legFixedRight, legFixedLeft, firstFix;
-    //public float degreesPerSecond = 2.0f;
-    public int delay = 0;
+    private bool legFixedRight, legFixedLeft, firstFix, shootFixed, isFacingRight, isFacingUp;
+    public float delay = 0;
+    public GameObject bulletPrefab;
+    private GameObject currentBullet;
 
     // Start is called before the first frame update
 
     void Start()
     {
+        shootFixed = true;
         score = 0;
     }
 
@@ -33,22 +35,24 @@ public class personagem : MonoBehaviour
     {
         if (delay >= 0)
         {
-            Debug.Log("delay tiros: " + delay);
-            delay--;
+            delay -= Time.deltaTime;
         }
 
-        if (Input.GetAxis("Vertical") > 0)
+        if (Input.GetAxis("Vertical") > 0 && delay < 0)
         {
             animeDorsal.SetInteger("Up", 1);
+            isFacingUp = true;
         }
         else
         {
+            isFacingUp = false;
             animeDorsal.SetInteger("Up", -1);
         }
 
- 
-        if (Input.GetAxis("Vertical") < 0)
+
+        if (Input.GetAxis("Vertical") < 0 && delay < 0)
         {
+            isFacingUp = false;
             animeDorsal.SetInteger("Down", 1);
         }
         else
@@ -56,19 +60,18 @@ public class personagem : MonoBehaviour
             animeDorsal.SetInteger("Down", -1);
         }
 
-
-        atirar();
-
-
         body.velocity = new Vector2(Input.GetAxis("Horizontal") * speed, body.velocity.y);
 
         if (Input.GetAxis("Horizontal") < 0)
         {
+            shootingPoint.transform.Rotate(0, 180, 0);
             animeDorsal.SetInteger("Speed", 1);
             animePernas.SetInteger("Speed", 1);
-            dorsal.localScale = new Vector3(-1, 1, 1);
+            if (delay < 0)
+                dorsal.localScale = new Vector3(-1, 1, 1);
             pernas.localScale = new Vector3(-1, 1, 1);
-            
+            shootingPoint.localScale = new Vector3(-1, 1, 1);
+
             if (!legFixedLeft)
             {
                 if (animeDorsal.GetBool("Jump"))
@@ -77,13 +80,17 @@ public class personagem : MonoBehaviour
                 }
                 FixLegPosition();
             }
+            isFacingRight = false;
         }
         else if (Input.GetAxis("Horizontal") > 0)
         {
+            shootingPoint.transform.Rotate(0, 180, 0);
             animeDorsal.SetInteger("Speed", 1);
             animePernas.SetInteger("Speed", 1);
-            dorsal.localScale = new Vector3(1, 1, 1);
+            if (delay < 0)
+                dorsal.localScale = new Vector3(1, 1, 1);
             pernas.localScale = new Vector3(1, 1, 1);
+            shootingPoint.localScale = new Vector3(1, 1, 1);
             if (!legFixedRight)
             {
                 if (animeDorsal.GetBool("Jump"))
@@ -92,6 +99,7 @@ public class personagem : MonoBehaviour
                 }
                 FixLegPosition();
             }
+            isFacingRight = true;
         }
         else
         {
@@ -99,7 +107,7 @@ public class personagem : MonoBehaviour
             animePernas.SetInteger("Speed", 0);
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && animePernas.GetBool("Grounded") && firstFix)
+        if (Input.GetKeyDown(KeyCode.Space) && animePernas.GetBool("Grounded") && firstFix && delay < 0)
         {
             FixJumpPosition();
             animeDorsal.SetBool("Jump", true);
@@ -108,25 +116,59 @@ public class personagem : MonoBehaviour
             animePernas.SetBool("Grounded", false);
             body.AddForce(new Vector2(body.velocity.x, jumpForce));
         }
-
-        
+        if (!animePernas.GetBool("Jump"))
+        {
+            atirar();
+        }
     }
+
+   
 
     private void atirar()
     {
-        if (Input.GetKeyDown("j") && delay<=0)
+        if (Input.GetKeyDown("j") && delay <= 0 && firstFix)
         {
+            currentBullet = Instantiate(bulletPrefab, shootingPoint.position, transform.rotation);
+            currentBullet.GetComponent<Bullet>().mudarposica(isFacingRight);
+            shootFixed = false;
             animeDorsal.SetBool("Atirar", true);
             print("space key was pressed");
-            delay = 20;
+            FixShootPosition();
+            delay = .25f;
         }
         else if (delay <= 0)
         {
+            if (!shootFixed)
+            {
+                if (isFacingRight)
+                {
+                    dorsal.position = new Vector3(pernas.position.x + 0.037f * 8, pernas.position.y + 0.154f * 8, dorsal.position.z);
+                }
+                else
+                {
+                    dorsal.position = new Vector3(pernas.position.x - 0.037f * 8, pernas.position.y + 0.154f * 8, dorsal.position.z);
+                }
+                shootFixed = true;
+            }
             animeDorsal.SetBool("Atirar", false);
         }
-         
     }
 
+    public void FixShootPosition()
+    {
+        if (isFacingUp)
+        {
+            dorsal.position = new Vector3(dorsal.position.x + .08f, dorsal.position.y + 0.2f * 8, dorsal.position.z);
+        }
+        else if (isFacingRight && !isFacingUp)
+        {
+            dorsal.position = new Vector3(dorsal.position.x + 0.08f * 8, dorsal.position.y, dorsal.position.z);
+        }
+        else if (!isFacingRight && !isFacingUp)
+        {
+            dorsal.position = new Vector3(dorsal.position.x - 0.08f * 8, dorsal.position.y, dorsal.position.z);
+        }
+    }
 
     private void FixLegPosition()
     {
@@ -149,11 +191,11 @@ public class personagem : MonoBehaviour
     {
         if (!legFixedRight)
         {
-            dorsal.position = new Vector3(dorsal.position.x + 0.07f*8, dorsal.position.y + 0.06f * 8, dorsal.position.z);
+            dorsal.position = new Vector3(dorsal.position.x + 0.07f * 8, dorsal.position.y + 0.06f * 8, dorsal.position.z);
         }
         else if (!legFixedLeft)
         {
-            dorsal.position = new Vector3(dorsal.position.x - 0.07f*8, dorsal.position.y + 0.06f * 8, dorsal.position.z);
+            dorsal.position = new Vector3(dorsal.position.x - 0.07f * 8, dorsal.position.y + 0.06f * 8, dorsal.position.z);
         }
     }
 
@@ -161,11 +203,11 @@ public class personagem : MonoBehaviour
     {
         if (!legFixedRight)
         {
-            dorsal.position = new Vector3(dorsal.position.x - 0.11f*8, dorsal.position.y, dorsal.position.z);
+            dorsal.position = new Vector3(dorsal.position.x - 0.11f * 8, dorsal.position.y, dorsal.position.z);
         }
         else if (!legFixedLeft)
         {
-            dorsal.position = new Vector3(dorsal.position.x + 0.11f*8, dorsal.position.y, dorsal.position.z);
+            dorsal.position = new Vector3(dorsal.position.x + 0.11f * 8, dorsal.position.y, dorsal.position.z);
         }
     }
 
@@ -173,11 +215,11 @@ public class personagem : MonoBehaviour
     {
         if (!legFixedRight)
         {
-            dorsal.position = new Vector3(pernas.position.x - 0.037f*8, pernas.position.y + 0.154f*8, dorsal.position.z);
+            dorsal.position = new Vector3(pernas.position.x - 0.037f * 8, pernas.position.y + 0.154f * 8, dorsal.position.z);
         }
         else if (!legFixedLeft)
         {
-            dorsal.position = new Vector3(pernas.position.x + 0.037f*8, pernas.position.y + 0.154f*8, dorsal.position.z);
+            dorsal.position = new Vector3(pernas.position.x + 0.037f * 8, pernas.position.y + 0.154f * 8, dorsal.position.z);
         }
     }
 

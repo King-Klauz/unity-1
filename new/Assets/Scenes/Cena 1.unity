@@ -212,7 +212,7 @@ MonoBehaviour:
   body: {fileID: 478992012}
   dorsal: {fileID: 857472690}
   pernas: {fileID: 1939352637}
-  bullet: {fileID: 0}
+  bullet: {fileID: 2012137384}
   jumpForce: 200
   speed: 3
   score: 0
@@ -784,4 +784,4 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
