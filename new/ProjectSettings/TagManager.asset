@@ -43,3 +43,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: background
+    uniqueID: 2564092593
+    locked: 0
+  - name: ForeGround
+    uniqueID: 3935590493
+    locked: 0
+  - name: Personagem
+    uniqueID: 3346515617
+    locked: 0
+  - name: Tiro
+    uniqueID: 2074618949
+    locked: 0

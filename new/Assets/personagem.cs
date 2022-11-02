@@ -21,6 +21,7 @@ public class personagem : MonoBehaviour
     public float delay = 0;
     public GameObject bulletPrefab;
     private GameObject currentBullet;
+    public int escala = 4;
 
     // Start is called before the first frame update
 
@@ -156,11 +157,11 @@ public class personagem : MonoBehaviour
             {
                 if (isFacingRight)
                 {
-                    dorsal.position = new Vector3(pernas.position.x + 0.037f * 8, pernas.position.y + 0.154f * 8, dorsal.position.z);
+                    dorsal.position = new Vector3(pernas.position.x + 0.037f * escala, pernas.position.y + 0.154f * escala, dorsal.position.z);
                 }
                 else
                 {
-                    dorsal.position = new Vector3(pernas.position.x - 0.037f * 8, pernas.position.y + 0.154f * 8, dorsal.position.z);
+                    dorsal.position = new Vector3(pernas.position.x - 0.037f * escala, pernas.position.y + 0.154f * escala, dorsal.position.z);
                 }
                 shootFixed = true;
             }
@@ -172,15 +173,15 @@ public class personagem : MonoBehaviour
     {
         if (isFacingUp)
         {
-            dorsal.position = new Vector3(dorsal.position.x + .08f, dorsal.position.y + 0.2f * 8, dorsal.position.z);
+            dorsal.position = new Vector3(dorsal.position.x + .08f, dorsal.position.y + 0.2f * escala, dorsal.position.z);
         }
         else if (isFacingRight && !isFacingUp)
         {
-            dorsal.position = new Vector3(dorsal.position.x + 0.08f * 8, dorsal.position.y, dorsal.position.z);
+            dorsal.position = new Vector3(dorsal.position.x + 0.08f * escala, dorsal.position.y, dorsal.position.z);
         }
         else if (!isFacingRight && !isFacingUp)
         {
-            dorsal.position = new Vector3(dorsal.position.x - 0.08f * 8, dorsal.position.y, dorsal.position.z);
+            dorsal.position = new Vector3(dorsal.position.x - 0.08f * escala, dorsal.position.y, dorsal.position.z);
         }
     }
 
@@ -205,11 +206,11 @@ public class personagem : MonoBehaviour
     {
         if (!legFixedRight)
         {
-            dorsal.position = new Vector3(dorsal.position.x + 0.07f * 8, dorsal.position.y + 0.06f * 8, dorsal.position.z);
+            dorsal.position = new Vector3(dorsal.position.x + 0.07f * escala, dorsal.position.y + 0.06f * escala, dorsal.position.z);
         }
         else if (!legFixedLeft)
         {
-            dorsal.position = new Vector3(dorsal.position.x - 0.07f * 8, dorsal.position.y + 0.06f * 8, dorsal.position.z);
+            dorsal.position = new Vector3(dorsal.position.x - 0.07f * escala, dorsal.position.y + 0.06f * escala, dorsal.position.z);
         }
     }
 
@@ -217,11 +218,11 @@ public class personagem : MonoBehaviour
     {
         if (!legFixedRight)
         {
-            dorsal.position = new Vector3(dorsal.position.x - 0.11f * 8, dorsal.position.y, dorsal.position.z);
+            dorsal.position = new Vector3(dorsal.position.x - 0.11f * escala, dorsal.position.y, dorsal.position.z);
         }
         else if (!legFixedLeft)
         {
-            dorsal.position = new Vector3(dorsal.position.x + 0.11f * 8, dorsal.position.y, dorsal.position.z);
+            dorsal.position = new Vector3(dorsal.position.x + 0.11f * escala, dorsal.position.y, dorsal.position.z);
         }
     }
 
@@ -229,11 +230,11 @@ public class personagem : MonoBehaviour
     {
         if (!legFixedRight)
         {
-            dorsal.position = new Vector3(pernas.position.x - 0.037f * 8, pernas.position.y + 0.154f * 8, dorsal.position.z);
+            dorsal.position = new Vector3(pernas.position.x - 0.037f * escala, pernas.position.y + 0.154f * escala, dorsal.position.z);
         }
         else if (!legFixedLeft)
         {
-            dorsal.position = new Vector3(pernas.position.x + 0.037f * 8, pernas.position.y + 0.154f * 8, dorsal.position.z);
+            dorsal.position = new Vector3(pernas.position.x + 0.037f * escala, pernas.position.y + 0.154f * escala, dorsal.position.z);
         }
     }
 
