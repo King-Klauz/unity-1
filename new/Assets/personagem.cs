@@ -129,7 +129,21 @@ public class personagem : MonoBehaviour
         if (Input.GetKeyDown("j") && delay <= 0 && firstFix)
         {
             currentBullet = Instantiate(bulletPrefab, shootingPoint.position, transform.rotation);
-            currentBullet.GetComponent<Bullet>().mudarposica(isFacingRight);
+            
+            if(isFacingRight && isFacingUp)
+            {
+                currentBullet.GetComponent<Bullet>().mudarpositionY();
+            }
+            else if(!isFacingRight && isFacingUp)
+            {
+                currentBullet.GetComponent<Bullet>().mudarpositionY();
+            }
+            else
+            {
+                currentBullet.GetComponent<Bullet>().mudarposica(isFacingRight);
+            }
+           
+            
             shootFixed = false;
             animeDorsal.SetBool("Atirar", true);
             print("space key was pressed");
