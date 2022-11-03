@@ -22,6 +22,7 @@ public class personagem : MonoBehaviour
     public GameObject bulletPrefab;
     private GameObject currentBullet;
     public int escala = 4;
+    public AudioSource tiro;
 
     // Start is called before the first frame update
 
@@ -131,6 +132,7 @@ public class personagem : MonoBehaviour
         {
             
             currentBullet = Instantiate(bulletPrefab, shootingPoint.position, transform.rotation);
+            tiro.Play();
             
             if(isFacingRight && isFacingUp)
             {

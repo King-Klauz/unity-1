@@ -130,7 +130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ff2a098447630541aec89d34c85bca5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rage: {fileID: 0}
+  anim: {fileID: 0}
 --- !u!4 &478992011 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8923151458280495435, guid: fc1eeac834cec584494963cf00d577c9,
@@ -230,6 +230,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsTrigger
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1544923364221835441, guid: 45ea8074bf161d045b5cf4bf915fc881,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1544923364221835443, guid: 45ea8074bf161d045b5cf4bf915fc881,
         type: 3}

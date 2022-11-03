@@ -8,11 +8,10 @@ public class Bullet : MonoBehaviour
     private Rigidbody2D rb;
     public float speed;
     // Start is called before the first frame update
-    /*void Start()
+    void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        
-    }*/
+        Destroy(gameObject, 5f);
+    }
 
     public void mudarposica(bool isfacingRight)
     {
@@ -29,5 +28,14 @@ public class Bullet : MonoBehaviour
     public void mudarpositionY()
     {
         rb.velocity = transform.up * speed;
+    }
+
+    public void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.CompareTag("inimigo"))
+        {
+            Destroy(gameObject);
+            col.GetComponent<inimigo>().TakeDamage();
+        }
     }
 }
