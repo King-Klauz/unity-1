@@ -129,6 +129,7 @@ public class personagem : MonoBehaviour
     {
         if (Input.GetKeyDown("j") && delay <= 0 && firstFix)
         {
+            
             currentBullet = Instantiate(bulletPrefab, shootingPoint.position, transform.rotation);
             
             if(isFacingRight && isFacingUp)
@@ -157,11 +158,11 @@ public class personagem : MonoBehaviour
             {
                 if (isFacingRight)
                 {
-                    dorsal.position = new Vector3(pernas.position.x + 0.037f * escala, pernas.position.y + 0.154f * escala, dorsal.position.z);
+                    dorsal.position = new Vector3(pernas.position.x + 0.037f * escala, pernas.position.y + 0.130f * escala, dorsal.position.z);
                 }
                 else
                 {
-                    dorsal.position = new Vector3(pernas.position.x - 0.037f * escala, pernas.position.y + 0.154f * escala, dorsal.position.z);
+                    dorsal.position = new Vector3(pernas.position.x - 0.037f * escala, pernas.position.y + 0.130f * escala, dorsal.position.z);
                 }
                 shootFixed = true;
             }
@@ -173,15 +174,15 @@ public class personagem : MonoBehaviour
     {
         if (isFacingUp)
         {
-            dorsal.position = new Vector3(dorsal.position.x + .08f, dorsal.position.y + 0.2f * escala, dorsal.position.z);
+            dorsal.position = new Vector3(dorsal.position.x + 0.08f, dorsal.position.y + 0.15f*escala, dorsal.position.z);
         }
         else if (isFacingRight && !isFacingUp)
         {
-            dorsal.position = new Vector3(dorsal.position.x + 0.08f * escala, dorsal.position.y, dorsal.position.z);
+            dorsal.position = new Vector3(dorsal.position.x + 0.10f * escala, dorsal.position.y - 0.01f, dorsal.position.z);
         }
         else if (!isFacingRight && !isFacingUp)
         {
-            dorsal.position = new Vector3(dorsal.position.x - 0.08f * escala, dorsal.position.y, dorsal.position.z);
+            dorsal.position = new Vector3(dorsal.position.x - 0.10f * escala, dorsal.position.y - 0.01f, dorsal.position.z);
         }
     }
 
@@ -191,14 +192,14 @@ public class personagem : MonoBehaviour
         {
             legFixedRight = true;
             legFixedLeft = false;
-            pernas.position = new Vector3(pernas.position.x - 0.8f, pernas.position.y, pernas.position.z);
+            pernas.position = new Vector3(pernas.position.x - 0.4f, pernas.position.y, pernas.position.z);
         }
         else if (!legFixedLeft || firstFix)
         {
             firstFix = true;
             legFixedLeft = true;
             legFixedRight = false;
-            pernas.position = new Vector3(pernas.position.x + 0.8f, pernas.position.y, pernas.position.z);
+            pernas.position = new Vector3(pernas.position.x + 0.4f, pernas.position.y, pernas.position.z);
         }
     }
 
@@ -206,11 +207,11 @@ public class personagem : MonoBehaviour
     {
         if (!legFixedRight)
         {
-            dorsal.position = new Vector3(dorsal.position.x + 0.07f * escala, dorsal.position.y + 0.06f * escala, dorsal.position.z);
+            dorsal.position = new Vector3(dorsal.position.x + 0.08f * escala, dorsal.position.y + 0.06f * escala, dorsal.position.z);
         }
         else if (!legFixedLeft)
         {
-            dorsal.position = new Vector3(dorsal.position.x - 0.07f * escala, dorsal.position.y + 0.06f * escala, dorsal.position.z);
+            dorsal.position = new Vector3(dorsal.position.x - 0.08f * escala, dorsal.position.y + 0.06f * escala, dorsal.position.z);
         }
     }
 
@@ -218,11 +219,11 @@ public class personagem : MonoBehaviour
     {
         if (!legFixedRight)
         {
-            dorsal.position = new Vector3(dorsal.position.x - 0.11f * escala, dorsal.position.y, dorsal.position.z);
+            dorsal.position = new Vector3(dorsal.position.x - 0.8f, dorsal.position.y, dorsal.position.z);
         }
         else if (!legFixedLeft)
         {
-            dorsal.position = new Vector3(dorsal.position.x + 0.11f * escala, dorsal.position.y, dorsal.position.z);
+            dorsal.position = new Vector3(dorsal.position.x + 0.8f, dorsal.position.y, dorsal.position.z);
         }
     }
 
@@ -230,11 +231,11 @@ public class personagem : MonoBehaviour
     {
         if (!legFixedRight)
         {
-            dorsal.position = new Vector3(pernas.position.x - 0.037f * escala, pernas.position.y + 0.154f * escala, dorsal.position.z);
+            dorsal.position = new Vector3(pernas.position.x - 0.03f * escala, pernas.position.y + 0.130f * escala, dorsal.position.z);
         }
         else if (!legFixedLeft)
         {
-            dorsal.position = new Vector3(pernas.position.x + 0.037f * escala, pernas.position.y + 0.154f * escala, dorsal.position.z);
+            dorsal.position = new Vector3(pernas.position.x + 0.03f * escala, pernas.position.y + 0.130f * escala, dorsal.position.z);
         }
     }
 

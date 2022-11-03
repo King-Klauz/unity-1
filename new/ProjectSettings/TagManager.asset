@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Grounded
   - Coin
+  - inimigo
   layers:
   - Default
   - TransparentFX
@@ -54,4 +55,7 @@ TagManager:
     locked: 0
   - name: Tiro
     uniqueID: 2074618949
+    locked: 0
+  - name: Inimigo
+    uniqueID: 2693609757
     locked: 0
