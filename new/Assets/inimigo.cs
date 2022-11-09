@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class inimigo : MonoBehaviour
 {
@@ -11,13 +12,19 @@ public class inimigo : MonoBehaviour
     private bool check;
     private float speed;
     private float life;
+    private vida vidapersonagem;
+    private float cooldown;
+    public vida vidaInimigo;
+
 
 
     // Start is called before the first frame update
     void Start()
     {
-        life = 5;
+        cooldown = 2f;
+        life = 100;
         speed = 5;
+        vidapersonagem = GameObject.FindGameObjectWithTag("Player").GetComponent<vida>();
     }
 
     // Update is called once per frame
@@ -27,13 +34,21 @@ public class inimigo : MonoBehaviour
         {
             float step = speed * Time.deltaTime;
             transform.position = Vector2.MoveTowards(transform.position, new Vector2(playerPosition.position.x + 7, playerPosition.position.y), step);
-            //transform.position += (playerPosition.position - transform.position).normalized * speed * Time.deltaTime;
+            
+            if (Math.Abs(transform.position.x - playerPosition.position.x)<10f && cooldown<=0)
+            {
+                cooldown = 2f;
+                vidapersonagem.tomarDano(10);
+                print(cooldown);
+            }
+            cooldown -= Time.deltaTime;
         }
     }
 
     public void TakeDamage()
     {
-        life--;
+        life-= 25;
+        vidaInimigo.tomarDano(25);
         //anim.SetTrigger("TakeHit");
         if (life <= 0)
         {
