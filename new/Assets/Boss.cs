@@ -23,7 +23,7 @@ public class Boss : MonoBehaviour
     public GameObject bulletPrefab;
     private GameObject currentBullet;
     public float delay = 0;
-    private bool isFacingRight = false;
+    private bool isFacingRightEnemy = false;
     private bool isDead = false;
     
 
@@ -66,11 +66,11 @@ public class Boss : MonoBehaviour
 
         if (transform.position.x < playerPosition.position.x)
         {
-            isFacingRight = true;
+            isFacingRightEnemy = true;
         }
         else
         {
-            isFacingRight = false;
+            isFacingRightEnemy = false;
         }
 
 
@@ -89,7 +89,7 @@ public class Boss : MonoBehaviour
                 print(cooldown);
             }
             cooldown -= Time.deltaTime;
-            atirar(isFacingRight);
+            atirar(isFacingRightEnemy);
         }
         else
         {
@@ -130,13 +130,13 @@ public class Boss : MonoBehaviour
         //anim.SetBool("rage", false);
     }
 
-    private void atirar(bool isfacingRight)
+    private void atirar(bool isFacingRightEnemy)
     {
         
         if (delay <= 0)
         {       
             currentBullet = Instantiate(bulletPrefab, shootingPoint.position, transform.rotation);
-            currentBullet.GetComponent<Enemy_bullet>().mudarposica(isfacingRight);
+            currentBullet.GetComponent<Enemy_bullet>().mudarposica(isFacingRightEnemy);
             
             delay = 2f;
         }
