@@ -13,17 +13,16 @@ public class Enemy_bullet : MonoBehaviour
         Destroy(gameObject, 5f);
     }
 
-    public void mudarposica()
+    public void mudarposica(bool isfacingRight)
     {
-        /*if (isfacingRight)
+        if (isfacingRight)
         {
             rb.velocity = transform.right * speed;
         }
         else
-        {*/
-            print("entrou+");
+        {
             rb.velocity = -transform.right * speed;
-        //}//
+        }
     }
 
     public void mudarpositionY()

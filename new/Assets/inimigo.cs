@@ -25,6 +25,7 @@ public class inimigo : MonoBehaviour
         life = 100;
         speed = 5;
         vidapersonagem = GameObject.FindGameObjectWithTag("Player").GetComponent<vida>();
+        playerPosition = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
     }
 
     // Update is called once per frame
@@ -34,16 +35,16 @@ public class inimigo : MonoBehaviour
         {
             anim.SetBool("rage", true);
             float step = speed * Time.deltaTime;
-            transform.position = Vector2.MoveTowards(transform.position, new Vector2(playerPosition.position.x + 7, playerPosition.position.y), step);
+            transform.position = Vector2.MoveTowards(transform.position, new Vector2(playerPosition.position.x, playerPosition.position.y), step);
 
-            /*if(transform.position.x<playerPosition.position.x+7)
+            if(transform.position.x<playerPosition.position.x)
             {
                 transform.localScale = new Vector3(-1, 1, 1);
             }
             else
             {
                 transform.localScale = new Vector3(1, 1, 1);
-            }*/
+            }
 
             if (Math.Abs(transform.position.x - playerPosition.position.x)<10f && cooldown<=0)
             {
