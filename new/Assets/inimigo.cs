@@ -22,7 +22,7 @@ public class inimigo : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        cooldown = 2f;
+        cooldown = 0f;
         life = 100;
         speed = 5;
         vidapersonagem = GameObject.FindGameObjectWithTag("Player").GetComponent<vida>();
@@ -52,7 +52,7 @@ public class inimigo : MonoBehaviour
                 transform.localScale = new Vector3(1, 1, 1);
             }
 
-            if (Math.Abs(transform.position.x - playerPosition.position.x)<10f && cooldown<=0)
+            if (Math.Abs(transform.position.x - playerPosition.position.x)<5f && cooldown<=0)
             {
                 cooldown = 2f;
                 vidapersonagem.tomarDano(10);
