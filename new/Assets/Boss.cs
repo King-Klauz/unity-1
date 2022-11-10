@@ -1,26 +1,34 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Linq;
 using UnityEngine;
-using System;
+using UnityEngine.UI;
 
-public class inimigo : MonoBehaviour
+public class Boss : MonoBehaviour
 {
     [SerializeField]
     Animator anim;
     //public Collider2D rage;
     private Transform playerPosition;
+    [SerializeField]
+    Transform shootingPoint;
     private bool check;
     private float speed;
     private float life;
     private vida vidapersonagem;
     private float cooldown;
     public vida vidaInimigo;
+    public GameObject bulletPrefab;
+    private GameObject currentBullet;
+    public float delay = 0;
+    private bool isFacingRight = false;
 
 
 
     // Start is called before the first frame update
     void Start()
-    {
+    { 
         cooldown = 2f;
         life = 100;
         speed = 5;
@@ -30,28 +38,37 @@ public class inimigo : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (delay >= 0)
+        {
+            delay -= Time.deltaTime;
+        }
+
+        /*if (transform.position.x < playerPosition.position.x)
+        {
+            isFacingRight = true;
+        }
+        else
+        {
+            isFacingRight = false;
+        }*/
+
+
         if (check)
         {
             anim.SetBool("rage", true);
+
             float step = speed * Time.deltaTime;
             transform.position = Vector2.MoveTowards(transform.position, new Vector2(playerPosition.position.x + 7, playerPosition.position.y), step);
 
-            /*if(transform.position.x<playerPosition.position.x+7)
-            {
-                transform.localScale = new Vector3(-1, 1, 1);
-            }
-            else
-            {
-                transform.localScale = new Vector3(1, 1, 1);
-            }*/
 
-            if (Math.Abs(transform.position.x - playerPosition.position.x)<10f && cooldown<=0)
+            if (Math.Abs(transform.position.x - playerPosition.position.x) < 5f && cooldown <= 0)
             {
                 cooldown = 2f;
                 vidapersonagem.tomarDano(10);
                 print(cooldown);
             }
             cooldown -= Time.deltaTime;
+            atirar();
         }
         else
         {
@@ -61,11 +78,12 @@ public class inimigo : MonoBehaviour
 
     public void TakeDamage()
     {
-        life-= 25;
+        life -= 25;
         vidaInimigo.tomarDano(25);
         //anim.SetTrigger("TakeHit");
         if (life <= 0)
         {
+            anim.SetBool("dead", true);
             //anim.SetTrigger("Death");
             Destroy(gameObject, 1);
         }
@@ -78,6 +96,7 @@ public class inimigo : MonoBehaviour
             playerPosition = col.transform;
             check = true;
         }
+        
     }
     void OnTriggerExit2D(Collider2D col)
     {
@@ -85,5 +104,20 @@ public class inimigo : MonoBehaviour
         {
             check = false;
         }
+        //anim.SetBool("rage", false);
+    }
+
+    private void atirar()
+    {
+        
+        if (delay <= 0)
+        {       
+            currentBullet = Instantiate(bulletPrefab, shootingPoint.position, transform.rotation);
+            currentBullet.GetComponent<Enemy_bullet>().mudarposica();
+            print("space key was pressed");
+            
+            delay = 2f;
+        }
+       
     }
 }

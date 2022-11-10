@@ -62,3 +62,6 @@ TagManager:
   - name: vida
     uniqueID: 2855427231
     locked: 0
+  - name: Boss
+    uniqueID: 4147063055
+    locked: 0

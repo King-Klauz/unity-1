@@ -2,27 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class Enemy_bullet : MonoBehaviour
 {
     [SerializeField]
     private Rigidbody2D rb;
-    public float speed;
+    public float speed=100f;
     // Start is called before the first frame update
     void Start()
     {
         Destroy(gameObject, 5f);
     }
 
-    public void mudarposica(bool isfacingRight)
+    public void mudarposica()
     {
-        if (isfacingRight)
+        /*if (isfacingRight)
         {
             rb.velocity = transform.right * speed;
         }
         else
-        {
+        {*/
+            print("entrou+");
             rb.velocity = -transform.right * speed;
-        }
+        //}//
     }
 
     public void mudarpositionY()
@@ -32,19 +33,10 @@ public class Bullet : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.CompareTag("inimigo"))
+        if (col.gameObject.CompareTag("Player"))
         {
-            print("entrou");
             Destroy(gameObject);
-            col.GetComponent<inimigo>().TakeDamage();
+            col.GetComponent<vida>().tomarDano(25);
         }
-
-        if (col.gameObject.CompareTag("Boss"))
-        {
-            print("entrou");
-            Destroy(gameObject);
-            col.GetComponent<Boss>().TakeDamage();
-        }
-
     }
 }
