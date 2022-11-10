@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class vida : MonoBehaviour
 {
     
-    float valorVida = 100;
+    public float valorVida = 100;
     public Slider life;
 
 

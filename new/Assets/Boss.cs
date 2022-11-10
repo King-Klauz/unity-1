@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Xml.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Boss : MonoBehaviour
 {
@@ -24,6 +25,8 @@ public class Boss : MonoBehaviour
     public float delay = 0;
     private bool isFacingRight = false;
     private bool isDead = false;
+    
+
 
 
 
@@ -40,6 +43,11 @@ public class Boss : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (vidapersonagem.valorVida <= 0)
+        {
+            SceneManager.LoadScene("GameOver");
+        }
+
         if (delay >= 0)
         {
             delay -= Time.deltaTime;

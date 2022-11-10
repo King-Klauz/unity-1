@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.SceneManagement;
 
 public class inimigo : MonoBehaviour
 {
@@ -31,6 +32,11 @@ public class inimigo : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (vidapersonagem.valorVida <= 0)
+        {
+            SceneManager.LoadScene("GameOver");
+        }
+
         if (check)
         {
             anim.SetBool("rage", true);
