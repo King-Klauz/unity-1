@@ -9,7 +9,6 @@ public class Menu : MonoBehaviour
     {
         SceneManager.LoadScene("Player");
 
-
     }
 
     void dificuldade()
@@ -22,7 +21,7 @@ public class Menu : MonoBehaviour
         Application.Quit();
     }
 
-    void reiniciar()
+    public void reiniciar()
     {
         SceneManager.LoadScene("Player");
     }

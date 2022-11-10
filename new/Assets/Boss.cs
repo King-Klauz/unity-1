@@ -107,6 +107,7 @@ public class Boss : MonoBehaviour
             print("entrou enemy");
             isDead = true;
             anim.SetBool("dead", true);
+            SceneManager.LoadScene("Win");
             Destroy(gameObject, 1);
         }
     }
